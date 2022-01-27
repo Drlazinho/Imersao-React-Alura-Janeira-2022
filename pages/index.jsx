@@ -1,34 +1,7 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import appConfig from '../config.json';
-
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: 'Open Sans', sans-serif;
-      }
-      /* App fit Height */ 
-      html, body, #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */ 
-    `}</style>
-  );
-}
 
 function Titulo(props) {
   const Tag = props.tag || 'h1';
@@ -60,16 +33,17 @@ function Titulo(props) {
 // export default HomePage
 
 export default function PaginaInicial() {
-  const username = 'drlazinho';
+  // const username = 'drlazinho';
+  const [username, setUsername]= useState('drlazinho');
+  const roteamento = useRouter();
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.primary[900],
-          backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap',
+          backgroundColor: appConfig.theme.colors.primary[100],
+          backgroundImage: 'url(https://images.contentstack.io/v3/assets/blt187521ff0727be24/bltc15ba510f02e7e45/60ee0d9185b042284396138b/freljord_splash.jpg)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
       >
@@ -78,6 +52,7 @@ export default function PaginaInicial() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            flexWrap: 'wrap-reverse',
             flexDirection: {
               xs: 'column',
               sm: 'row',
@@ -85,12 +60,19 @@ export default function PaginaInicial() {
             width: '100%', maxWidth: '700px',
             borderRadius: '5px', padding: '32px', margin: '16px',
             boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-            backgroundColor: appConfig.theme.colors.neutrals[500],
+            backgroundColor: appConfig.theme.colors.neutrals[900],
           }}
         >
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={
+              (e) => {
+                console.log('funciona')
+                e.preventDefault();
+                roteamento.push('/chat');
+              }
+            }
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -102,6 +84,13 @@ export default function PaginaInicial() {
             </Text>
 
             <TextField
+            value={username}
+            onChange={
+              function(e) {
+                const valor = e.target.value
+                setUsername(valor)
+              }
+            }
               fullWidth
               textFieldColors={{
                 neutral: {
@@ -111,6 +100,7 @@ export default function PaginaInicial() {
                   backgroundColor: appConfig.theme.colors.neutrals[800],
                 },
               }}
+
             />
             <Button
               type='submit'
