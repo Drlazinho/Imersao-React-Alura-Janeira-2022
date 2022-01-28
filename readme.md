@@ -12,3 +12,7 @@ Link: https://imersao-react-alura-janeira-2022.vercel.app/
 - useState
 - Eventos onSbumit, onClick
 
+#### Dia 3 - Chat offline? Aprimorando as habilidades com State
+- Detalhes
+    - uso do map no react
+    - Flexibilização para o back-end
